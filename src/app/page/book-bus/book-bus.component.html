@@ -1,0 +1,82 @@
+<div class="container mt-4 w-100" *ngIf="!selectedSeat">
+
+  <h2 class="text-light">Select a Seat</h2>
+      <div class="bus-layout">
+        <div class="row">
+          <div class="col-md-1 seat" *ngFor="let seat of seats">
+            <button class="btn btn-outline-primary"  (click)="toggleSeat(seat)">
+              {{ seat }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+<div *ngIf="selectedSeat" class="container full-height d-flex justify-content-center align-items-center">
+  <div class="signup-form">
+    <div>
+      <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+        <button type="button" class="ms-auto mt-3 border-0 rounded bg-transparent" routerLink="/page"
+          (click)="this.bookingForm.reset();"><i class="pi pi-times"></i></button>
+
+        <label class="fs-1 fw-1" for="chk" aria-hidden="true" >BOOK SEAT</label>
+
+        <input
+          [ngClass]="{'form-control':true , 'border-danger': bookingForm.get('seatNumber')?.invalid && bookingForm.get('seatNumber')?.touched}"
+          for="seatNumber" type="text" formControlName="seatNumber" placeholder="Bus departure" required="" [disabled]="true">
+
+        <div class="text-danger" *ngIf="bookingForm.get('seatNumber')?.invalid && bookingForm.get('seatNumber')?.touched">
+          departure is required .
+        </div>
+
+        <input
+          [ngClass]="{'form-control' : true , 'border-danger' : bookingForm.get('destination')?.invalid && bookingForm.get('destination')?.touched}"
+          for="destination" type="text" formControlName="destination" placeholder="Bus destination" required="" [disabled]="true">
+        <div class="text-danger" *ngIf="bookingForm.get('destination')?.invalid && bookingForm.get('destination')?.touched">
+          destination is required.
+        </div>
+
+        <input
+          [ngClass]="{'form-control' : true , 'border-danger' : bookingForm.get('departure')?.invalid && bookingForm.get('departure')?.touched}"
+          for="departure" type="text" formControlName="departure" placeholder="Bus departure" required="" [disabled]="true">
+        <div class="text-danger" *ngIf="bookingForm.get('departure')?.invalid && bookingForm.get('departure')?.touched">
+          departure is required.
+        </div>
+
+        <input
+          [ngClass]="{'form-control' : true , 'border-danger' : bookingForm.get('departureTime')?.invalid && bookingForm.get('departureTime')?.touched}"
+          for="departureTime" type="text" formControlName="departureTime" placeholder="Bus departureTime" required="" [disabled]="true">
+        <div class="text-danger" *ngIf="bookingForm.get('departureTime')?.invalid && bookingForm.get('departureTime')?.touched">
+          departureTime is required.
+        </div>
+
+
+        <input
+          [ngClass]="{'form-control' : true , 'border-danger' : bookingForm.get('payment')?.invalid && bookingForm.get('payment')?.touched}"
+          for="payment" type="text" formControlName="payment" placeholder=" payment" required="" [disabled]="true">
+        <div class="text-danger" *ngIf="bookingForm.get('payment')?.invalid && bookingForm.get('payment')?.touched">
+          payment is required.
+        </div>
+
+        <div>
+          <h3>Choose an option:</h3>
+          <div *ngFor="let option of options">
+            <label>
+              <input type="radio"
+                     name="options"
+                     [value]="option.id" [(ngModel)]="selectedOption"
+                     (change)="onChange(option.id)">
+              {{ option.label }}
+            </label>
+          </div>
+          <p>Selected Option: {{ selectedOption }}</p>
+        </div>
+
+        <button class="button-primary" type="submit">Search Bus </button>
+      </form>
+    </div>
+  </div>
+</div>
+
